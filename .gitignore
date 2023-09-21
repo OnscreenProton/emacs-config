@@ -8,6 +8,7 @@ init.el
 packages.el
 cli.el
 setup.sh
+subconf
 
 !publish
 !publish/config.html
