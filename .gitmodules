@@ -4,3 +4,45 @@
 [submodule "lisp/org-pandoc-import"]
 	path = lisp/org-pandoc-import
 	url = https://git.tecosaur.net/tec/org-pandoc-import.git
+[submodule "lisp/lexic"]
+	path = lisp/lexic
+	url = https://github.com/tecosaur/lexic
+[submodule "lisp/authinfo-color-mode"]
+	path = lisp/authinfo-color-mode
+	url = https://github.com/tecosaur/authinfo-color-mode.git
+[submodule "lisp/screenshot"]
+	path = lisp/screenshot
+	url = https://git.tecosaur.net/tec/screenshot.el.git
+[submodule "lisp/engrave-faces"]
+	path = lisp/engrave-faces
+	url = https://git.tecosaur.net/tec/engrave-faces.git
+[submodule "lisp/emacs-everywhere"]
+	path = lisp/emacs-everywhere
+	url = https://git.tecosaur.net/tec/emacs-everywhere.git
+[submodule "lisp/ox-chameleon"]
+	path = lisp/ox-chameleon
+	url = https://git.tecosaur.net/tec/ox-chameleon.git
+[submodule "lisp/pdftotext"]
+	path = lisp/pdftotext
+	url = https://git.tecosaur.net/tec/pdftotext.el.git
+[submodule "lisp/orgdiff"]
+	path = lisp/orgdiff
+	url = https://git.tecosaur.net/tec/orgdiff.git
+[submodule "lisp/org-music"]
+	path = lisp/org-music
+	url = https://git.tecosaur.net/tec/org-music.git
+[submodule "lisp/ob-julia"]
+	path = lisp/ob-julia
+	url = https://github.com/nico202/ob-julia.git
+[submodule "lisp/org-glossary"]
+	path = lisp/org-glossary
+	url = https://git.tecosaur.net/tec/org-glossary.git
+[submodule "lisp/ox-pluto"]
+	path = lisp/ox-pluto
+	url = https://git.tecosaur.net/tec/ox-pluto.git
+[submodule "lisp/simple-comment-markup"]
+	path = lisp/simple-comment-markup
+	url = https://git.tecosaur.net/tec/simple-comment-markup.git
+[submodule "lisp/conf-data-toml"]
+	path = lisp/conf-data-toml
+	url = https://git.tecosaur.net/tec/conf-data-toml.git
