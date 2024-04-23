@@ -93,10 +93,10 @@ Here are some settings I've stolen from the configs I referenced.
 
 ** Doom theme
 
-I like light themes now. Let's let Emacs use one.
+I liked light themes at one point. Now I don't like them as much.
 
 #+begin_src emacs-lisp
-(setq doom-theme 'doom-one-light)
+(setq doom-theme 'doom-one)
 #+end_src
 
 Add soliare mode to set fringes opposite of background
@@ -879,3 +879,5 @@ Chameleons are cool, not having to touches faces is cooler (not the COVID kind)
 (use-package! ox-chameleon
   :after ox)
 #+end_src
+
+
