@@ -60,6 +60,12 @@ Here are some miscellaneous changes I'd like to make.
 (pixel-scroll-precision-mode t)    ; Only avalible for Emacs >= 29
 #+end_src
 
+Finally, set Emacs to use aspell instead of ispell.
+
+#+begin_src emacs-lisp
+(setq ispell-program-name "aspell")
+#+end_src
+
 * User interface
 
 Here are some various changes I'd like to make to Doom.
@@ -120,7 +126,7 @@ I like the way the dashboard looks by default. But let's make it easier to acces
         :desc "Open config.org" :ng "c" (cmd! (find-file (expand-file-name "config.org" doom-user-dir)))
         :desc "Open NixOS config" :ng "x" (cmd! (doom-project-find-file "~/github/nix-config/"))
         :desc "Open dotfile" :ng "." (cmd! (doom-project-find-file "~/.config/"))
-        :desc "Notes (roam)" :ng "n" #'org-roam-node-find
+        ;:desc "Notes (roam)" :ng "n" #'org-roam-node-find
         :desc "Switch buffer" :ng "b" #'+vertico/switch-workspace-buffer
         :desc "Switch buffers (all)" :ng "B" #'consult-buffer
         :desc "IBuffer" :ng "i" #'ibuffer
@@ -180,8 +186,9 @@ Tecosaur's org-mode package has some weird shenanigins that I think are quite us
 Tabbing doesn't work for some reason so this might fix it.
 
 #+begin_src emacs-lisp
-(setq org-src-tab-acts-natively t
-      org-directory "~/Documents/org")
+(setq org-src-tab-acts-natively t)
+(cond (IS-WINDOWS (setq org-directory "c:/Users/onscr/Documents/org"))
+      (t (setq org-directory "~/Documents/org")))
 #+end_src
 
 Add transclusion to easily grab stuff online.
@@ -476,8 +483,9 @@ Most of this is taken from sunnyhasija's config.
 Start using org-roam.
 
 #+begin_src emacs-lisp
-(setq org-roam-v2-ack t
-      org-roam-directory "~/Documents/org/roam")
+(setq org-roam-v2-ack t)
+(cond (IS-WINDOWS (setq org-roam-directory "c:/Users/onscr/Documents/org/roam"))
+      (t (setq org-roam-directory "~/Documents/org/roam")))
 
 (use-package! org-roam
   :after org
@@ -881,3 +889,86 @@ Chameleons are cool, not having to touches faces is cooler (not the COVID kind)
 #+end_src
 
 
+
+*****
+** Calculator
+Emacs ~calc~ is pretty handy, but there are a few things we can do to improve it.
+
+*** Defaults
+
+Use symbolic and radians.
+#+begin_src emacs-lisp
+(setq calc-angle-mode 'rad
+      calc-symbolic-mode t)
+#+end_src
+
+*** CalcTeX
+
+Pulling from Tecosaur's Emacs config, CalcTeX looks pretty handy.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! calctex :recipe (:host github :repo "johnbcoughlin/calctex"
+                           :files ("*.el" "calctex/*.el" "calctex-contrib/*.el" "org-calctex/*.el" "vendor"))
+  :pin "67a2e76847a9ea9eff1f8e4eb37607f84b380ebb")
+#+end_src
+
+And their config for it
+
+#+begin_src emacs-lisp
+(use-package! calctex
+  :commands calctex-mode
+  :init
+  (add-hook 'calc-mode-hook #'calctex-mode))
+;;  :config
+;;  (setq calctex-additional-latex-packages "
+;;\\usepackage[usenames]{xcolor}
+;;\\usepackage{soul}
+;;\\usepackage{adjustbox}
+;;\\usepackage{amsmath}
+;;\\usepackage{amssymb}
+;;\\usepackage{siunitx}
+;;\\usepackage{cancel}
+;;\\usepackage{mathtools}
+;;\\usepackage{mathalpha}
+;;\\usepackage{xparse}
+;;\\usepackage{arevmath}"
+;;        calctex-additional-latex-macros
+;;        (concat calctex-additional-latex-macros
+;;                "\n\\let\\evalto\\Rightarrow"))
+;;  (defadvice! no-messaging-a (orig-fn &rest args)
+;;    :around #'calctex-default-dispatching-render-process
+;;    (let ((inhibit-message t) message-log-max)
+;;      (apply orig-fn args)))
+  ;; Fix hardcoded dvichop path (whyyyyyyy)
+  ;;(let ((vendor-folder (concat (file-truename doom-local-dir)
+  ;;                             "straight/"
+  ;;                             (format "build-%s" emacs-version)
+  ;;                             "/calctex/vendor/")))
+  ;;  (setq calctex-dvichop-sty (concat vendor-folder "texd/dvichop")
+  ;;        calctex-dvichop-bin (concat vendor-folder "texd/dvichop")))
+  ;;(unless (file-exists-p calctex-dvichop-bin)
+  ;;  (message "CalcTeX: Building dvichop binary")
+  ;;  (let ((default-directory (file-name-directory calctex-dvichop-bin)))
+  ;;    (call-process "make" nil nil nil))))
+#+end_src
+
+*** Casual-calc
+I recently found [[https://github.com/kickingvegas/casual-calc][this package]] and thought it would be nice to have in my config.
+#+begin_src emacs-lisp :tangle packages.el
+(package! casual-calc)
+#+end_src
+
+And it's config
+
+#+begin_src emacs-lisp
+(use-package! calc
+  :defer t)
+(use-package! casual-calc
+  :after calc
+  :ensure nil)
+(map! ;;:map +emacs-calculator
+      :leader
+      (:prefix-map ("v" . "Caulculator")
+       :desc "Open Calc" "o" #'calc
+       :desc "Calc Transient Menu" "t" #'casual-calc-tmenu))
+#+end_src
